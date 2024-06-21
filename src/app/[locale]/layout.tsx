@@ -4,8 +4,8 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import { unstable_setRequestLocale } from "next-intl/server";
 import "@/styles/globals.scss";
 import { ToastUtils } from "@/utils";
-import CustomThemeProvider from "@/providers/CustomThemeProviders";
 import { Header } from "@/components/header";
+import { CustomThemeProvider, StoreProvider } from "@/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,16 +25,18 @@ export default function RootLayout({
   const messages = useMessages();
   unstable_setRequestLocale(locale);
   return (
-    <html lang={locale}>
-      <body className="dark:bg-dark">
-        <NextIntlClientProvider messages={messages}>
-          <CustomThemeProvider>
-            <Header />
-            {children}
-          </CustomThemeProvider>
-          <ToastUtils />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <StoreProvider>
+      <html suppressHydrationWarning={true} lang={locale}>
+        <body className="dark:bg-dark">
+          <NextIntlClientProvider messages={messages}>
+            <CustomThemeProvider>
+              <Header />
+              {children}
+            </CustomThemeProvider>
+            <ToastUtils />
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

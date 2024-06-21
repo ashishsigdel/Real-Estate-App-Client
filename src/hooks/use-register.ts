@@ -1,14 +1,14 @@
-// import { setMessage } from "@/redux/features/popupMessageSlice";
+import { setMessage } from "@/redux/features/popupMessageSlice";
 import { register } from "@/services/guestServices";
 import { Register } from "@/types/guest";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 export default function useRegister() {
   const router = useRouter();
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState<Register>({
     email: "",
@@ -127,16 +127,22 @@ export default function useRegister() {
 
         const data = response.data;
         router.push("/login");
-        toast.success(data.message);
-        // dispatch(
-        //   setMessage({
-        //     message: "Registration successful! Please login to continue.",
-        //     type: "success",
-        //     showOn: "login",
-        //   })
-        // );
+        dispatch(
+          setMessage({
+            message: "Registration successful! Please login to continue.",
+            type: "success",
+            showOn: "login",
+          })
+        );
       } catch (error: any) {
-        toast.error(error.response.data.message);
+        dispatch(
+          setMessage({
+            message: error.response.data.message,
+            type: "error",
+            showOn: "register",
+          })
+        );
+        // toast.error(error.response.data.message);
       } finally {
         setIsLoading(false);
       }
