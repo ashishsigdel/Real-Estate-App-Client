@@ -9,3 +9,8 @@
 .light-background {
   background: #f3f4f6;
 }
+
+.container {
+  @apply max-w-screen-lg;
+  @apply mx-auto;
+}

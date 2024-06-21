@@ -5,6 +5,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import "@/styles/globals.scss";
 import { ToastUtils } from "@/utils";
 import CustomThemeProvider from "@/providers/CustomThemeProviders";
+import { Header } from "@/components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,10 @@ export default function RootLayout({
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <CustomThemeProvider>{children}</CustomThemeProvider>
+          <CustomThemeProvider>
+            <Header />
+            {children}
+          </CustomThemeProvider>
           <ToastUtils />
         </NextIntlClientProvider>
       </body>
