@@ -4,7 +4,6 @@ import { Register } from "@/types/guest";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 
 export default function useRegister() {
   const router = useRouter();
@@ -126,7 +125,6 @@ export default function useRegister() {
         });
 
         const data = response.data;
-        router.push("/login");
         dispatch(
           setMessage({
             message: "Registration successful! Please login to continue.",
@@ -134,15 +132,25 @@ export default function useRegister() {
             showOn: "login",
           })
         );
+        router.push("/login");
       } catch (error: any) {
-        dispatch(
-          setMessage({
-            message: error.response.data.message,
-            type: "error",
-            showOn: "register",
-          })
-        );
-        // toast.error(error.response.data.message);
+        if (error.response.data.message) {
+          dispatch(
+            setMessage({
+              message: error.response.data.message,
+              type: "error",
+              showOn: "register",
+            })
+          );
+        } else {
+          dispatch(
+            setMessage({
+              message: "Something went wrong!",
+              type: "error",
+              showOn: "register",
+            })
+          );
+        }
       } finally {
         setIsLoading(false);
       }

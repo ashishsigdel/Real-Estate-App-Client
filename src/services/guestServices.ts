@@ -1,5 +1,5 @@
 import { myAxios } from "@/services/apiServices";
-import { Register } from "@/types/guest";
+import { Login, Register } from "@/types/guest";
 
 export const register = async (formData: Register) => {
   try {
@@ -14,6 +14,18 @@ export const register = async (formData: Register) => {
   } catch (error: any) {
     console.log(error);
 
+    throw error;
+  }
+};
+
+export const login = async (formData: Login) => {
+  try {
+    const response = await myAxios.post("/auth/sign-in", {
+      email: formData.email,
+      password: formData.password,
+    });
+    return response;
+  } catch (error: any) {
     throw error;
   }
 };

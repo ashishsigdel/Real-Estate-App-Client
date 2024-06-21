@@ -1,4 +1,5 @@
 "use client";
+import { PopupMessage, Spinner } from "@/common";
 import { useRegister } from "@/hooks";
 import React from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
@@ -33,7 +34,7 @@ export default function RegisterForm() {
     <div className="bg-light dark:bg-dark max-w-4xl mx-auto">
       <form onSubmit={onSubmit} className="flex flex-row flex-wrap mx-[-15px]">
         <span className="w-[100%] px-[15px]">
-          {/* <PopupMessage messageShowOn={"register"} /> */}
+          <PopupMessage messageShowOn={"register"} />
         </span>
         <span className="w-[100%] mb-[27px] px-[15px]">
           <label className="inline-block mb-[9px] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
@@ -219,8 +220,7 @@ export default function RegisterForm() {
             </a>
           </span>
           {isLoading ? (
-            // <Spinner />
-            <p>Loading...</p>
+            <Spinner />
           ) : (
             <button
               type="submit"

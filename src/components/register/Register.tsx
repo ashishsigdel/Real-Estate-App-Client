@@ -5,7 +5,7 @@ import RegisterForm from "./RegisterForm";
 
 export default function Register() {
   return (
-    <div className="bg-light dark:bg-dark">
+    <div className="bg-light dark:bg-dark min-h-screen">
       <div className="container">
         <SectionHeader
           title="Register"
