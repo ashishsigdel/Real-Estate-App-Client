@@ -6,17 +6,17 @@ export default function HeaderAccount() {
   return (
     <div className="relative group cursor-pointer">
       <div
-        className="flex items-center text-success transition-all duration-300 ease-in-out mr-8"
+        className="flex items-center text-gray-500 transition-all duration-300 ease-in-out mr-8"
         title="Account"
       >
-        <div className="relative flex text-2xl leading-[17px] text-success dark:text-lightcolor">
+        <div className="relative flex text-2xl leading-[17px] text-gray-500 dark:text-gray-400">
           <FaUser />
         </div>
         <div className="flex flex-col uppercase ml-2.5">
-          <span className="transition-all duration-300 ease-in-out text-xs leading-none text-success dark:text-lightcolor mb-1.5 tracking-wider capitalize font-medium">
+          <span className="transition-all duration-300 ease-in-out text-xs leading-none text-gray-500 dark:text-gray-400 mb-1.5 tracking-wider capitalize font-medium">
             Account
           </span>
-          <span className="transition-all duration-300 ease-in-out text-sm font-medium text-success dark:text-lightcolor leading-[14px] max-[1199px]:text-xs max-[1199px]:min-w-[48px]">
+          <span className="transition-all duration-300 ease-in-out text-sm font-medium text-gray-500 dark:text-gray-400 leading-[14px] max-[1199px]:text-xs max-[1199px]:min-w-[48px]">
             Login
           </span>
         </div>
@@ -25,7 +25,7 @@ export default function HeaderAccount() {
         <li>
           <Link
             href="/register"
-            className="block py-2 px-5 text-sm font-normal text-success dark:text-lightcolor hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="block py-2 px-5 text-sm font-normal text-gray-500 dark:text-lightcolor hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             Register
           </Link>
@@ -33,7 +33,7 @@ export default function HeaderAccount() {
         <li>
           <Link
             href="/login"
-            className="block py-2 px-5 text-sm font-normal text-success dark:text-lightcolor hover:bg-gray-100 dark:hover:bg-gray-700"
+            className="block py-2 px-5 text-sm font-normal text-gray-500 dark:text-lightcolor hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             Login
           </Link>

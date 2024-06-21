@@ -26,7 +26,7 @@ export default function RootLayout({
   unstable_setRequestLocale(locale);
   return (
     <html lang={locale}>
-      <body>
+      <body className="dark:bg-dark">
         <NextIntlClientProvider messages={messages}>
           <CustomThemeProvider>
             <Header />

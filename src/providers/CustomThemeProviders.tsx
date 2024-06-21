@@ -8,7 +8,7 @@ export default function CustomThemeProvider({
   children: React.ReactNode;
 }) {
   return (
-    <ThemeProvider attribute="class" enableSystem={false} defaultTheme="light">
+    <ThemeProvider attribute="class" defaultTheme="system">
       {children}
     </ThemeProvider>
   );

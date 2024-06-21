@@ -2,15 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.dark .dark\:dark-background {
-  background: #161f33;
-}
-
-.light-background {
-  background: #f3f4f6;
-}
-
 .container {
   @apply max-w-screen-lg;
   @apply mx-auto;
+  @apply px-3;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

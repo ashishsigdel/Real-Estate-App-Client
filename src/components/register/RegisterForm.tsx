@@ -2,7 +2,7 @@
 import { useRegister } from "@/hooks";
 import React from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { PopupMessage, Spinner } from "@/components/common";
+// import { PopupMessage, Spinner } from "@/components/common";
 
 export default function RegisterForm() {
   const {
@@ -30,12 +30,12 @@ export default function RegisterForm() {
     onSubmit,
   } = useRegister();
   return (
-    <div className="gi-register-form">
+    <div className="bg-light dark:bg-dark max-w-4xl mx-auto">
       <form onSubmit={onSubmit} className="flex flex-row flex-wrap mx-[-15px]">
-        <span className="gi-register-wrap gi-register-full w-[100%] px-[15px]">
-          <PopupMessage messageShowOn={"register"} />
+        <span className="w-[100%] px-[15px]">
+          {/* <PopupMessage messageShowOn={"register"} /> */}
         </span>
-        <span className="gi-register-wrap gi-register-full w-[100%] mb-[27px] px-[15px]">
+        <span className="w-[100%] mb-[27px] px-[15px]">
           <label className="inline-block mb-[9px] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
             Full Name*
           </label>
@@ -62,7 +62,7 @@ export default function RegisterForm() {
           )}
         </span>
 
-        <span className="gi-register-wrap gi-register-half w-[50%] mb-[27px] px-[15px]">
+        <span className="w-[100%] sm:w-[50%] mb-[27px] px-[15px]">
           <label className="inline-block mb-[9px] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
             Email Address*
           </label>
@@ -89,7 +89,7 @@ export default function RegisterForm() {
           )}
         </span>
 
-        <span className="gi-register-wrap gi-register-half w-[50%] mb-[27px] px-[15px]">
+        <span className="w-[100%] sm:w-[50%] mb-[27px] px-[15px]">
           <label className="inline-block mb-[9px] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
             Phone Number*
           </label>
@@ -116,7 +116,7 @@ export default function RegisterForm() {
           )}
         </span>
 
-        <span className="gi-register-wrap gi-register-half w-[50%] mb-[27px] px-[15px]">
+        <span className="w-[100%] sm:w-[50%] mb-[27px] px-[15px]">
           <label className="inline-block mb-[9px] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
             Password*
           </label>
@@ -161,7 +161,7 @@ export default function RegisterForm() {
           )}
         </span>
 
-        <span className="gi-register-wrap gi-register-half w-[50%] mb-[27px] px-[15px]">
+        <span className="w-[100%] sm:w-[50%] mb-[27px] px-[15px]">
           <label className="inline-block mb-[9px] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
             Confirm Password*
           </label>
@@ -208,7 +208,7 @@ export default function RegisterForm() {
           )}
         </span>
 
-        <span className="gi-register-wrap gi-register-btn flex flex-row justify-between items-center w-full px-[15px] max-[767px]:flex-col ">
+        <span className="gi-register-btn flex flex-row justify-between items-center w-full px-[15px] max-[767px]:flex-col ">
           <span className="text-gray-500 text-[14px] tracking-[0.02rem]">
             Already have an account?
             <a
@@ -219,7 +219,8 @@ export default function RegisterForm() {
             </a>
           </span>
           {isLoading ? (
-            <Spinner />
+            // <Spinner />
+            <p>Loading...</p>
           ) : (
             <button
               type="submit"
