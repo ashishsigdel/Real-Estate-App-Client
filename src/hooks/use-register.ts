@@ -2,7 +2,7 @@ import { setMessage } from "@/redux/features/popupMessageSlice";
 import { register } from "@/services/guestServices";
 import { Register } from "@/types/guest";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function useRegister() {
@@ -134,28 +134,48 @@ export default function useRegister() {
         );
         router.push("/login");
       } catch (error: any) {
-        if (error.response.data.message) {
-          dispatch(
-            setMessage({
-              message: error.response.data.message,
-              type: "error",
-              showOn: "register",
-            })
-          );
-        } else {
-          dispatch(
-            setMessage({
-              message: "Something went wrong!",
-              type: "error",
-              showOn: "register",
-            })
-          );
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status < 500
+        ) {
+          if (error.response.data.errors) {
+            const errors = error.response.data.errors;
+
+            errors.map((error: any) => {
+              const key = Object.keys(error)[0];
+              const value = error[key];
+
+              if (key === "email") {
+                setEmailError(value);
+              }
+
+              if (key === "password") {
+                setPasswordError(value);
+              }
+            });
+          }
         }
+        dispatch(
+          setMessage({
+            message: error.response.data.message,
+            type: "error",
+            showOn: "register",
+          })
+        );
       } finally {
         setIsLoading(false);
       }
     }
   };
+
+  const redirectIfAuthenticate = useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+      router.push("/");
+    }
+  }, [router]);
 
   return {
     email,

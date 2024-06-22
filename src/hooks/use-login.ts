@@ -1,10 +1,10 @@
-// import { encryptAccessToken } from "@/helper/Helper";
-// import { setAuth } from "@/redux/features/authSlice";
+import { encryptAccessToken } from "@/helper/Helper";
+import { setAuth } from "@/redux/features/authSlice";
 import { setMessage } from "@/redux/features/popupMessageSlice";
 import { login } from "@/services/guestServices";
 import { Login } from "@/types/guest";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function useLogin() {
@@ -71,14 +71,16 @@ export default function useLogin() {
         const data = response.data;
 
         const accessToken: string = data.accessToken;
-        // const encryptedAccessToken: string = encryptAccessToken(accessToken);
+        const encryptedAccessToken: string = encryptAccessToken(accessToken);
 
-        // localStorage.setItem("accessToken", encryptedAccessToken);
+        localStorage.setItem("accessToken", encryptedAccessToken);
         const userData = JSON.stringify(data.user);
+        const userProfileData = JSON.stringify(data.validUserProfile);
         localStorage.setItem("user", userData);
+        localStorage.setItem("user-profile", userProfileData);
 
-        // dispatch(setAuth(data.user));
-        // router.push("/dashboard");
+        dispatch(setAuth(data.user));
+        router.push("/");
       } catch (error: any) {
         if (
           error.response &&
@@ -114,6 +116,14 @@ export default function useLogin() {
       }
     }
   };
+
+  const redirectIfAuthenticate = useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+      router.push("/");
+    }
+  }, [router]);
 
   return {
     email,

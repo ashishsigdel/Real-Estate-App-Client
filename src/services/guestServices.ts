@@ -29,3 +29,48 @@ export const login = async (formData: Login) => {
     throw error;
   }
 };
+
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await myAxios.post("/password-reset/forgot-password", {
+      email,
+    });
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const validateResetPasswordOtp = async (
+  otp: string,
+  resetToken: string
+) => {
+  try {
+    const response = await myAxios.post("/password-reset/verify-otp", {
+      otp: otp,
+      resetToken: resetToken,
+    });
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const resetPassword = async (
+  otp: string,
+  resetToken: string,
+  password: string,
+  confirmPassword: string
+) => {
+  try {
+    const response = await myAxios.post("/password-reset/reset-password", {
+      otp: otp,
+      resetToken: resetToken,
+      password: password,
+      confirmPassword: confirmPassword,
+    });
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};

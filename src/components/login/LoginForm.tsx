@@ -52,7 +52,7 @@ export default function LoginForm() {
           )}
         </span>
 
-        <span className="w-[100%] mb-[27px] px-[15px]">
+        <span className="w-[100%] mb-[20px] px-[15px]">
           <label className="inline-block mb-[9px] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
             Password*
           </label>
@@ -95,6 +95,16 @@ export default function LoginForm() {
               {passwordError}
             </span>
           )}
+        </span>
+        <span className="mb-[20px] px-[15px] flex justify-end w-full">
+          <label className="mb-[0] text-gray-500 dark:text-gray-400 text-[15px] font-medium tracking-[0] leading-[1]">
+            <a
+              href={"/forgot-password"}
+              className="mt-[10px] text-gray-500 text-[14px] tracking-[0] flex justify-end hover:underline font-semibold"
+            >
+              Forgot Password?
+            </a>
+          </label>
         </span>
 
         <span className="gi-register-btn flex flex-row justify-between items-center w-full px-[15px] max-[767px]:flex-col ">
