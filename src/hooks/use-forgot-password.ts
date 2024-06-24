@@ -5,11 +5,7 @@ import {
   setResetToken,
 } from "@/redux/features/guestSlice";
 import { setMessage } from "@/redux/features/popupMessageSlice";
-//   import {
-//     resendEmailVerification,
-//     resendEmailVerifyOtp,
-//     verifyEmail,
-//   } from "@/services/authService";
+import { verifyEmail } from "@/services/authService";
 import {
   forgotPassword,
   resetPassword,
@@ -361,62 +357,62 @@ export default function useForgotPassword() {
     }
   };
 
-  //   const onSubmitVefifyEmail = async (event: FormEvent<HTMLFormElement>) => {
-  //     event.preventDefault();
+  const onSubmitVefifyEmail = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  //     validateOtp();
-  //     const otp = parseInt(otpInputs.join(""), 10);
-  //     const stringOTP = otp.toString();
-  //     if (!otpError && email) {
-  //       setIsLoading(true);
-  //       try {
-  //         const response: any = await verifyEmail(stringOTP, email);
-  //         dispatch(
-  //           setMessage({
-  //             message: "Email verified successfully!",
-  //             type: "success",
-  //             showOn: "login",
-  //           })
-  //         );
-  //         dispatch(removeGuest());
-  //         router.push("/login");
-  //       } catch (error: any) {
-  //         if (
-  //           error.response &&
-  //           error.response.status >= 400 &&
-  //           error.response.status < 500
-  //         ) {
-  //           if (error.response.data.errors) {
-  //             const errors = error.response.data.errors;
-  //             errors.map((error: any) => {
-  //               const key = Object.keys(error)[0];
-  //               const value = error[key];
-  //               if (key === "otp") {
-  //                 setOtpError(value);
-  //               }
-  //             });
-  //           }
-  //           dispatch(
-  //             setMessage({
-  //               message: error.response.data.message,
-  //               type: "error",
-  //               showOn: "verify-email",
-  //             })
-  //           );
-  //           return;
-  //         }
-  //         dispatch(
-  //           setMessage({
-  //             message: error.response.data.message,
-  //             type: "error",
-  //             showOn: "verify-email",
-  //           })
-  //         );
-  //       } finally {
-  //         setIsLoading(false);
-  //       }
-  //     }
-  //   };
+    validateOtp();
+    const otp = parseInt(otpInputs.join(""), 10);
+    const stringOTP = otp.toString();
+    if (!otpError && email) {
+      setIsLoading(true);
+      try {
+        const response: any = await verifyEmail(stringOTP, email);
+        dispatch(
+          setMessage({
+            message: "Email verified successfully!",
+            type: "success",
+            showOn: "login",
+          })
+        );
+        dispatch(removeGuest());
+        router.push("/login");
+      } catch (error: any) {
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status < 500
+        ) {
+          if (error.response.data.errors) {
+            const errors = error.response.data.errors;
+            errors.map((error: any) => {
+              const key = Object.keys(error)[0];
+              const value = error[key];
+              if (key === "otp") {
+                setOtpError(value);
+              }
+            });
+          }
+          dispatch(
+            setMessage({
+              message: error.response.data.message,
+              type: "error",
+              showOn: "verify-email",
+            })
+          );
+          return;
+        }
+        dispatch(
+          setMessage({
+            message: error.response.data.message,
+            type: "error",
+            showOn: "verify-email",
+          })
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
 
   const onSubmitResetPassword = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -488,13 +484,13 @@ export default function useForgotPassword() {
     }
   };
 
-  const redirectIfAuthenticate = useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
+  // const redirectIfAuthenticate = useEffect(() => {
+  //   const accessToken = localStorage.getItem("accessToken");
 
-    if (accessToken) {
-      router.push("/");
-    }
-  }, [router]);
+  //   if (accessToken) {
+  //     router.push("/");
+  //   }
+  // }, [router]);
 
   return {
     email,
@@ -515,7 +511,7 @@ export default function useForgotPassword() {
     inputRefs,
     isVerifyButtonEnabled,
     router,
-    redirectIfAuthenticate,
+    // redirectIfAuthenticate,
     handleChange,
     togglePasswordVisibility,
     toggleConfirmPasswordVisibility,
@@ -535,5 +531,6 @@ export default function useForgotPassword() {
     dispatch,
     countdown,
     setCountdown,
+    onSubmitVefifyEmail,
   };
 }

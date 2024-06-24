@@ -1,5 +1,6 @@
 import { encryptAccessToken } from "@/helper/Helper";
 import { setAuth } from "@/redux/features/authSlice";
+import { setEmail } from "@/redux/features/guestSlice";
 import { setMessage } from "@/redux/features/popupMessageSlice";
 import { login } from "@/services/guestServices";
 import { Login } from "@/types/guest";
@@ -63,24 +64,36 @@ export default function useLogin() {
       setIsLoading(true);
       try {
         setIsLoading(true);
+
         const response = await login({
           email,
           password,
         });
 
         const data = response.data;
+        const user = JSON.stringify(data.user);
 
-        const accessToken: string = data.accessToken;
-        const encryptedAccessToken: string = encryptAccessToken(accessToken);
+        if (user && response.data.user.isEmailVerified) {
+          const accessToken: string = data.accessToken;
+          const encryptedAccessToken: string = encryptAccessToken(accessToken);
 
-        localStorage.setItem("accessToken", encryptedAccessToken);
-        const userData = JSON.stringify(data.user);
-        const userProfileData = JSON.stringify(data.validUserProfile);
-        localStorage.setItem("user", userData);
-        localStorage.setItem("user-profile", userProfileData);
+          localStorage.setItem("accessToken", encryptedAccessToken);
 
-        dispatch(setAuth(data.user));
-        router.push("/");
+          localStorage.setItem("user", user);
+
+          dispatch(setAuth(data.user));
+          router.push("/");
+        } else {
+          dispatch(
+            setMessage({
+              message: "Please verify your email first.",
+              type: "warning",
+              showOn: "verify-email",
+            })
+          );
+          dispatch(setEmail(email));
+          router.push("/verify-email");
+        }
       } catch (error: any) {
         if (
           error.response &&
@@ -103,10 +116,11 @@ export default function useLogin() {
               }
             });
           }
+          return;
         }
         dispatch(
           setMessage({
-            message: error.response.data.message,
+            message: error,
             type: "error",
             showOn: "login",
           })

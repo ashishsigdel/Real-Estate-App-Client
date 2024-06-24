@@ -12,8 +12,6 @@ export const register = async (formData: Register) => {
     });
     return response;
   } catch (error: any) {
-    console.log(error);
-
     throw error;
   }
 };

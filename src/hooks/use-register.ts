@@ -1,3 +1,4 @@
+import { setEmail } from "@/redux/features/guestSlice";
 import { setMessage } from "@/redux/features/popupMessageSlice";
 import { register } from "@/services/guestServices";
 import { Register } from "@/types/guest";
@@ -127,12 +128,14 @@ export default function useRegister() {
         const data = response.data;
         dispatch(
           setMessage({
-            message: "Registration successful! Please login to continue.",
+            message:
+              "Registration successful! Please verify your email to continue.",
             type: "success",
-            showOn: "login",
+            showOn: "verify-email",
           })
         );
-        router.push("/login");
+        dispatch(setEmail(email));
+        router.push("/verify-email");
       } catch (error: any) {
         if (
           error.response &&
@@ -155,6 +158,7 @@ export default function useRegister() {
               }
             });
           }
+          return;
         }
         dispatch(
           setMessage({

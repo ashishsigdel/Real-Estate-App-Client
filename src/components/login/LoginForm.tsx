@@ -19,7 +19,7 @@ export default function LoginForm() {
     onSubmit,
   } = useLogin();
   return (
-    <div className="bg-light dark:bg-dark max-w-4xl mx-auto">
+    <div className="bg-light dark:bg-dark max-w-4xl mx-auto mb-10">
       <form onSubmit={onSubmit} className="flex flex-row flex-wrap mx-[-15px]">
         <span className="w-[100%] px-[15px]">
           <PopupMessage messageShowOn={"login"} />

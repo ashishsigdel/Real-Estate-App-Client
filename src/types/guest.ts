@@ -18,3 +18,8 @@ export type ForgotPassword = {
   confirmPassword: string | null;
   otp: string | null;
 };
+
+export type VerifyEmail = {
+  email: string | null;
+  otp: string | null;
+};
