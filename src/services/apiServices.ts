@@ -43,14 +43,14 @@ myAxios.interceptors.response.use(
   },
   async (error) => {
     const byPassUrls = [
-      "/auth/login",
+      "/auth/sign-in",
       "/auth/refresh-token",
-      "/auth/register",
-      "/reset-password/forgot-password",
-      "/reset-password/verify-otp",
-      "/reset-password/update-password",
-      "/auth/verify",
-      "/auth/resend-otp",
+      "/auth/google",
+      "/auth/sign-up",
+      "/password-reset/forgot-password",
+      "/password-reset/verify-otp",
+      "/password-reset/reset-password",
+      "/auth//verify-email",
     ];
 
     if (byPassUrls.includes(error.config.url)) {

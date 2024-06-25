@@ -34,15 +34,28 @@ export default function useVerifyEmail() {
         );
         setCountdown(60);
       } catch (error: any) {
-        const errorMessage =
-          error.response?.data.message || "Something went wrong";
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status < 500
+        ) {
+          dispatch(
+            setMessage({
+              message: error.response.data.message,
+              type: "error",
+              showOn: "register",
+            })
+          );
+          return;
+        }
         dispatch(
           setMessage({
-            message: errorMessage,
+            message: "Somethings went wrong!",
             type: "error",
-            showOn: "verify-email",
+            showOn: "register",
           })
         );
+        return;
       } finally {
         setIsLoading(false);
       }
@@ -57,11 +70,6 @@ export default function useVerifyEmail() {
       router.push("/login");
     }
   };
-
-  // Send OTP on component mount
-  useEffect(() => {
-    sendOtp();
-  }, []);
 
   // Countdown timer for OTP resend
   useEffect(() => {
@@ -108,15 +116,28 @@ export default function useVerifyEmail() {
         );
         setCountdown(60);
       } catch (error: any) {
-        const errorMessage =
-          error.response?.data.message || "Something went wrong";
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status < 500
+        ) {
+          dispatch(
+            setMessage({
+              message: error.response.data.message,
+              type: "error",
+              showOn: "register",
+            })
+          );
+          return;
+        }
         dispatch(
           setMessage({
-            message: errorMessage,
+            message: "Somethings went wrong!",
             type: "error",
-            showOn: "verify-email",
+            showOn: "register",
           })
         );
+        return;
       } finally {
         setIsLoading(false);
       }
@@ -221,16 +242,6 @@ export default function useVerifyEmail() {
           error.response.status >= 400 &&
           error.response.status < 500
         ) {
-          if (error.response.data.errors) {
-            const errors = error.response.data.errors;
-            errors.map((error: any) => {
-              const key = Object.keys(error)[0];
-              const value = error[key];
-              if (key === "otp") {
-                setOtpError(value);
-              }
-            });
-          }
           dispatch(
             setMessage({
               message: error.response.data.message,
@@ -242,7 +253,7 @@ export default function useVerifyEmail() {
         }
         dispatch(
           setMessage({
-            message: error.response.data.message,
+            message: "Somethings went wrong!",
             type: "error",
             showOn: "verify-email",
           })

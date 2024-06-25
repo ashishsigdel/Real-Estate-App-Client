@@ -141,16 +141,6 @@ export default function useForgotPassword() {
           error.response.status >= 400 &&
           error.response.status < 500
         ) {
-          if (error.response.data.errors) {
-            const errors = error.response.data.errors;
-            errors.map((error: any) => {
-              const key = Object.keys(error)[0];
-              const value = error[key];
-              if (key === "email") {
-                setEmailError(value);
-              }
-            });
-          }
           dispatch(
             setMessage({
               message: error.response.data.message,
@@ -162,11 +152,12 @@ export default function useForgotPassword() {
         }
         dispatch(
           setMessage({
-            message: "Something went wrong",
+            message: "Somethings went wrong!",
             type: "error",
             showOn: "forgot-password",
           })
         );
+        return;
       } finally {
         setIsLoading(false);
       }
@@ -213,20 +204,21 @@ export default function useForgotPassword() {
         }
         dispatch(
           setMessage({
-            message: "Something went wrong",
+            message: "Somethings went wrong!",
             type: "error",
             showOn: "verify-otp",
           })
         );
+        return;
       } finally {
         setIsLoading(false);
       }
     } else {
       dispatch(
         setMessage({
-          message: "Please enter a valid email",
+          message: "Url not valid!",
           type: "error",
-          showOn: "verify-otp",
+          showOn: "login",
         })
       );
     }
@@ -325,16 +317,6 @@ export default function useForgotPassword() {
           error.response.status >= 400 &&
           error.response.status < 500
         ) {
-          if (error.response.data.errors) {
-            const errors = error.response.data.errors;
-            errors.map((error: any) => {
-              const key = Object.keys(error)[0];
-              const value = error[key];
-              if (key === "otp") {
-                setOtpError(value);
-              }
-            });
-          }
           dispatch(
             setMessage({
               message: error.response.data.message,
@@ -346,11 +328,12 @@ export default function useForgotPassword() {
         }
         dispatch(
           setMessage({
-            message: "Something went wrong",
+            message: "Somethings went wrong!",
             type: "error",
             showOn: "verify-otp",
           })
         );
+        return;
       } finally {
         setIsLoading(false);
       }
@@ -382,32 +365,23 @@ export default function useForgotPassword() {
           error.response.status >= 400 &&
           error.response.status < 500
         ) {
-          if (error.response.data.errors) {
-            const errors = error.response.data.errors;
-            errors.map((error: any) => {
-              const key = Object.keys(error)[0];
-              const value = error[key];
-              if (key === "otp") {
-                setOtpError(value);
-              }
-            });
-          }
           dispatch(
             setMessage({
               message: error.response.data.message,
               type: "error",
-              showOn: "verify-email",
+              showOn: "forgot-password",
             })
           );
           return;
         }
         dispatch(
           setMessage({
-            message: error.response.data.message,
+            message: "Somethings went wrong!",
             type: "error",
-            showOn: "verify-email",
+            showOn: "forgot-password",
           })
         );
+        return;
       } finally {
         setIsLoading(false);
       }
@@ -449,18 +423,6 @@ export default function useForgotPassword() {
           error.response.status >= 400 &&
           error.response.status < 500
         ) {
-          if (error.response.data.errors) {
-            const errors = error.response.data.errors;
-            errors.map((error: any) => {
-              const key = Object.keys(error)[0];
-              const value = error[key];
-              if (key === "password") {
-                setPasswordError(value);
-              } else if (key === "confirmPassword") {
-                setConfirmPasswordError(value);
-              }
-            });
-          }
           dispatch(
             setMessage({
               message: error.response.data.message,
@@ -472,12 +434,12 @@ export default function useForgotPassword() {
         }
         dispatch(
           setMessage({
-            message: "Something went wrong",
+            message: "Somethings went wrong!",
             type: "error",
             showOn: "reset-password",
           })
         );
-        setIsLoading(false);
+        return;
       } finally {
         setIsLoading(false);
       }
