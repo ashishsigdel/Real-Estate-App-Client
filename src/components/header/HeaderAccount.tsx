@@ -2,36 +2,20 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 // import { useLogin } from "@/hooks";
 import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import { setMessage } from "@/redux/features/popupMessageSlice";
 import { useRouter } from "next/navigation";
+import { IRootState } from "@/redux/rootReducer";
 
 export default function HeaderAccount() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+  const { isAuthenticated, user } = useSelector(
+    (state: IRootState) => state.auth
   );
-
-  const user = useSelector((state: RootState) => state.auth.user);
-  // console.log("isAuthenticated", isAuthenticated);
-  // console.log("user", user);
-
-  useEffect(() => {
-    if (isAuthenticated && user && !user.isEmailVerified) {
-      dispatch(
-        setMessage({
-          message: "Please verify your email first.",
-          type: "warning",
-          showOn: "verify-email",
-        })
-      );
-      router.push("/verify-email");
-    }
-  }, [isAuthenticated, user, dispatch, router]);
+  console.log(isAuthenticated, user);
 
   return (
     <div className="flex items-center">

@@ -6,6 +6,7 @@ import "@/styles/globals.scss";
 import { ToastUtils } from "@/utils";
 import { Header } from "@/components/header";
 import { CustomThemeProvider, StoreProvider } from "@/providers";
+import AuthUtil from "@/components/utils/AuthUtils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         <body className="dark:bg-dark">
           <NextIntlClientProvider messages={messages}>
             <CustomThemeProvider>
+              <AuthUtil />
               <Header />
               {children}
             </CustomThemeProvider>

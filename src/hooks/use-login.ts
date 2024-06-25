@@ -100,31 +100,23 @@ export default function useLogin() {
           error.response.status >= 400 &&
           error.response.status < 500
         ) {
-          if (error.response.data.errors) {
-            const errors = error.response.data.errors;
-
-            errors.map((error: any) => {
-              const key = Object.keys(error)[0];
-              const value = error[key];
-
-              if (key === "email") {
-                setEmailError(value);
-              }
-
-              if (key === "password") {
-                setPasswordError(value);
-              }
-            });
-          }
+          dispatch(
+            setMessage({
+              message: error.response.data.message,
+              type: "error",
+              showOn: "login",
+            })
+          );
           return;
         }
         dispatch(
           setMessage({
-            message: error,
+            message: "Somethings went wrong!",
             type: "error",
             showOn: "login",
           })
         );
+        return;
       } finally {
         setIsLoading(false);
       }

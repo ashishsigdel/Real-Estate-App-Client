@@ -19,4 +19,5 @@ export const resetAll = () => {
   };
 };
 
+export type IRootState = ReturnType<typeof rootReducer>;
 export default rootReducer;
