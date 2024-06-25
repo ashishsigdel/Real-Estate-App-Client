@@ -3,6 +3,7 @@ import rootReducer, { resetAll } from "./rootReducer";
 
 const appReducer = (state: any, action: any) => {
   if (action.type === "RESET_ALL") {
+    // Return the state with all slices reset
     return rootReducer(undefined, action.payload);
   }
   return rootReducer(state, action);
@@ -14,4 +15,3 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
