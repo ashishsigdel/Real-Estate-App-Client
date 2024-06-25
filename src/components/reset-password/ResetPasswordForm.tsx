@@ -55,7 +55,7 @@ export default function ResetPasswordForm() {
         className="flex flex-row flex-wrap mx-[-15px]"
       >
         <span className="w-[100%] px-[15px]">
-          <PopupMessage messageShowOn={"forgot-password"} />
+          <PopupMessage messageShowOn={"reset-password"} />
         </span>
 
         <span className="w-[100%] mb-[27px] px-[15px]">
