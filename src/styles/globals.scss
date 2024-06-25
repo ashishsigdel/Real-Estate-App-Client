@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+  @apply max-w-screen-lg;
+  @apply mx-auto;
+  @apply px-5;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
