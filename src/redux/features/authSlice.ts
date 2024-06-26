@@ -6,6 +6,7 @@ interface User {
   fullName: string;
   phone: string;
   username: string;
+  profilePicture: string | undefined;
 }
 
 interface AuthState {

@@ -22,3 +22,12 @@ export const verifyEmail = async (otp: string, email: string) => {
     throw error;
   }
 };
+
+export const logout = async () => {
+  try {
+    const response = await myAxios.post("/auth/sign-out");
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};

@@ -2,20 +2,26 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-// import { useLogin } from "@/hooks";
 import { FaUser, FaHeart, FaShoppingBag } from "react-icons/fa";
 import { setMessage } from "@/redux/features/popupMessageSlice";
 import { useRouter } from "next/navigation";
 import { IRootState } from "@/redux/rootReducer";
+import { useLogOut } from "@/hooks";
+import Image from "next/image";
 
 export default function HeaderAccount() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { onSubmit, isLoading } = useLogOut();
 
   const { isAuthenticated, user } = useSelector(
     (state: IRootState) => state.auth
   );
-  console.log(isAuthenticated, user);
+
+  const handleLogoutClick = (event: any) => {
+    event.preventDefault();
+    onSubmit(event);
+  };
 
   return (
     <div className="flex items-center">
@@ -26,14 +32,24 @@ export default function HeaderAccount() {
           title="Account"
         >
           <div className="relative flex text-2xl leading-[17px] text-gray-500 dark:text-gray-400">
-            <FaUser />
+            {user && user?.profilePicture ? (
+              <Image
+                src={user.profilePicture}
+                alt="user"
+                width={200}
+                height={200}
+                className="w-10 h-10 object-cover rounded-full border-2 border-skin"
+              />
+            ) : (
+              <FaUser />
+            )}
           </div>
           <div className="flex flex-col uppercase ml-2.5">
             <span className="transition-all duration-300 ease-in-out text-xs leading-none text-gray-500 dark:text-gray-400 mb-1.5 tracking-wider capitalize font-medium">
               Account
             </span>
             <span className="transition-all duration-300 ease-in-out text-sm font-medium text-gray-500 dark:text-gray-400 leading-[14px] max-[1199px]:text-xs max-[1199px]:min-w-[48px]">
-              {isAuthenticated ? "Profile" : "Login"}
+              {isAuthenticated ? `${user?.fullName.split(" ")[0]}` : "Login"}
             </span>
           </div>
         </div>
@@ -48,20 +64,15 @@ export default function HeaderAccount() {
                   Profile
                 </Link>
               </li>
-              {/* {isLoading ? ( */}
-              {/* <div className="w-full flex justify-center items-center py-2"> */}
-              {/* <FaSpinner className="w-4 h-4 text-gray-500 dark:text-gray-400 animate-spin" /> */}
-              {/* </div> */}
-              {/* ) : ( */}
+
               <li>
                 <div
                   className="cursor-pointer block py-2 px-5 text-sm font-normal text-gray-500 dark:text-lightcolor hover:bg-gray-100 dark:hover:bg-gray-700"
-                  // onClick={handleLogoutClick}
+                  onClick={handleLogoutClick}
                 >
-                  Logout
+                  {isLoading ? "Logging Out" : "Log Out"}
                 </div>
               </li>
-              {/* )}  */}
             </>
           ) : (
             <>
