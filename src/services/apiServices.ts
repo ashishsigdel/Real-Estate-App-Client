@@ -26,14 +26,14 @@ const refreshAccessToken = async () => {
       }
     );
 
-    const newAccessToken: string = response.data.data.accessToken;
+    const newAccessToken: string = response.data.accessToken;
     const encryptedAccessToken: string = encryptAccessToken(newAccessToken);
     localStorage.setItem("accessToken", encryptedAccessToken);
 
     return newAccessToken;
   } catch (error: any) {
     localStorage.clear();
-    window.location.href = "/login";
+    window.location.href = "/";
   }
 };
 
@@ -43,21 +43,22 @@ myAxios.interceptors.response.use(
   },
   async (error) => {
     const byPassUrls = [
-      "/auth/sign-in",
-      "/auth/refresh-token",
-      "/auth/google",
       "/auth/sign-up",
+      "/auth/sign-in",
+      "/auth/google",
+      "/auth/refresh-token",
+      "/auth/send-email-verification",
+      "/auth//verify-email",
       "/password-reset/forgot-password",
       "/password-reset/verify-otp",
       "/password-reset/reset-password",
-      "/auth//verify-email",
     ];
 
     if (byPassUrls.includes(error.config.url)) {
       throw error;
     }
 
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.data.message === "jwt expired") {
       const originalRequest = error.config;
       try {
         const newAccessToken = await refreshAccessToken();
@@ -76,6 +77,7 @@ myAxios.interceptors.request.use((config) => {
   const accessToken = decryptAccessToken(
     localStorage.getItem("accessToken") || ""
   );
+
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
