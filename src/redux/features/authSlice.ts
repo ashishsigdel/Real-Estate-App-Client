@@ -7,6 +7,8 @@ interface User {
   phone: string;
   username: string;
   profilePicture: string | undefined;
+  gender?: string;
+  dob?: string;
 }
 
 interface AuthState {
