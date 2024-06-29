@@ -8,3 +8,4 @@ export { default as useUpdateProfile } from "./use-update-profile";
 export { default as useDeleteAccount } from "./use-delete-account";
 export { default as useProfile } from "./use-profile";
 export { default as useConversations } from "./use-conversations";
+export { default as useMessage } from "./use-message";

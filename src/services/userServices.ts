@@ -27,6 +27,15 @@ export const getOthersProfile = async (username: string) => {
   }
 };
 
+export const getOthersProfileById = async (userId: string) => {
+  try {
+    const response = await myAxios.get(`/users/profile-by-id/${userId}`);
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
 export const updatePassword = async (
   oldPassword: string,
   newPassword: string,

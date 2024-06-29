@@ -7,7 +7,7 @@ import { FaPhone } from "react-icons/fa";
 export default function TopHeader() {
   const pathname = usePathname();
 
-  if (pathname === "/chat") {
+  if (pathname.startsWith("/chat")) {
     return null;
   }
   return (

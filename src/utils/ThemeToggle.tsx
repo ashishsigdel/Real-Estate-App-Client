@@ -12,11 +12,11 @@ export default function ThemeToggle() {
       className=""
     >
       {theme === "dark" ? (
-        <div className="text-[22px] text-skin font-bold">
+        <div className="text-[26px] text-skin font-bold">
           <FaRegMoon />
         </div>
       ) : (
-        <div className="text-[22px] text-skin font-bold">
+        <div className="text-[26px] text-skin font-bold">
           <BiSun />
         </div>
       )}
