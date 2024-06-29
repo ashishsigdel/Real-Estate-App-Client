@@ -1,18 +1,16 @@
-"use client";
-import { IRootState } from "@/redux/rootReducer";
 import React from "react";
-import { useSelector } from "react-redux";
+import { Sidebar } from "@/components/chat";
+import { MessageContainer } from "@/components/chat";
 
 export default function Chat() {
-  const { user } = useSelector((state: IRootState) => state.auth);
-
   return (
-    <div className="bg-light dark:bg-dark min-h-screen">
-      {user && (
-        <div className="container">
-          sidebar <br /> MessageContainer
+    <div className="bg-light dark:bg-dark w-full">
+      <div className="container">
+        <div className="flex w-full h-[calc(100vh-96px)] overflow-hidden border-x border-b border-lightcolor dark:border-darkcolor">
+          <Sidebar />
+          <MessageContainer />
         </div>
-      )}
+      </div>
     </div>
   );
 }
