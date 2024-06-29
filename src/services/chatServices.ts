@@ -30,3 +30,24 @@ export const sendMessage = async (receiverId: string, message: Message) => {
     throw error;
   }
 };
+
+export const updateMessage = async (messageId: string, newMessage: Message) => {
+  try {
+    const response = await myAxios.put(
+      `/message/update/${messageId}`,
+      newMessage
+    );
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const deleteMessage = async (messageId: string) => {
+  try {
+    const response = await myAxios.delete(`/message/delete/${messageId}`);
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};

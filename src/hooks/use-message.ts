@@ -1,6 +1,10 @@
 import { setMessage } from "@/redux/features/popupMessageSlice";
 import { IRootState } from "@/redux/rootReducer";
-import { sendMessage as sendMessageService } from "@/services/chatServices";
+import {
+  deleteMessage,
+  sendMessage as sendMessageService,
+  updateMessage,
+} from "@/services/chatServices";
 import { useParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,10 +59,68 @@ export default function useMessage() {
     }
   };
 
+  const updateAMessage = async (messageId: string, newMessage: string) => {
+    try {
+      await updateMessage(messageId, { message: newMessage });
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500
+      ) {
+        dispatch(
+          setMessage({
+            message: error.response.data.message,
+            type: "error",
+            showOn: "chat",
+          })
+        );
+        return;
+      }
+      dispatch(
+        setMessage({
+          message: "Something went wrong!",
+          type: "error",
+          showOn: "chat",
+        })
+      );
+    }
+  };
+
+  const deleteAMessage = async (messageId: string) => {
+    try {
+      await deleteMessage(messageId);
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500
+      ) {
+        dispatch(
+          setMessage({
+            message: error.response.data.message,
+            type: "error",
+            showOn: "chat",
+          })
+        );
+        return;
+      }
+      dispatch(
+        setMessage({
+          message: "Something went wrong!",
+          type: "error",
+          showOn: "chat",
+        })
+      );
+    }
+  };
+
   return {
-    sendAMessage,
-    handleMessageChange,
-    isLoading,
     typedMessage,
+    handleMessageChange,
+    sendAMessage,
+    updateAMessage,
+    deleteAMessage,
+    isLoading,
   };
 }
