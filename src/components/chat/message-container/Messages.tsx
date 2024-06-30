@@ -3,13 +3,13 @@ import React from "react";
 import Message from "./Message";
 import { useSelector } from "react-redux";
 import { IRootState } from "@/redux/rootReducer";
+import { MessageType } from "@/types/message";
+import { useMessage } from "@/hooks";
 
-interface MessagesProps {
-  messages: any[];
-}
-
-const Messages: React.FC<MessagesProps> = ({ messages }) => {
+const Messages: React.FC = () => {
   const { user } = useSelector((state: IRootState) => state.auth);
+
+  const { messages } = useMessage();
 
   return (
     <div className="px-4 flex-1 overflow-auto">

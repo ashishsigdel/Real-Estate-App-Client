@@ -51,48 +51,12 @@ export default function useConversations() {
     }
   };
 
-  const fetchConversation = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetchMessages(params.conversationId);
-      const data = response.data;
-
-      setMessages(data);
-    } catch (error: any) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status < 500
-      ) {
-        dispatch(
-          setMessage({
-            message: error.response.data.message,
-            type: "error",
-            showOn: "profile",
-          })
-        );
-        return;
-      }
-      dispatch(
-        setMessage({
-          message: "Somethings went wrong!",
-          type: "error",
-          showOn: "profile",
-        })
-      );
-      return;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return {
     fetchChatUsers,
     isLoading,
     chatUsers,
     router,
     params,
-    fetchConversation,
     messages,
   };
 }

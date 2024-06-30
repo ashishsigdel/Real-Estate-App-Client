@@ -2,21 +2,20 @@
 import React, { useEffect, useState } from "react";
 import { TiMessages } from "react-icons/ti";
 import Messages from "./Messages";
-import MesssageInput from "./MesssageInput";
+import MesssageInput from "./MessageInput";
 import { usePathname, useParams } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { IRootState } from "@/redux/rootReducer";
-import { useRouter } from "next/navigation";
-import { setMessage } from "@/redux/features/popupMessageSlice";
-import { useConversations, useProfile } from "@/hooks";
+import useMessage from "@/hooks/use-message";
+import useProfile from "@/hooks/use-profile";
+import { Spinner } from "@/common";
 
 export default function MessageContainer() {
   const [selectedConversation, setSelectedConversation] = useState<string>("");
   const pathname = usePathname();
   const params = useParams<{ conversationId: string }>();
   const { user } = useSelector((state: IRootState) => state.auth);
-
-  const { fetchConversation, messages } = useConversations();
+  const { fetchConversation, messages } = useMessage();
   const { fetchProfileById, profileDataById } = useProfile();
 
   useEffect(() => {
@@ -44,7 +43,7 @@ export default function MessageContainer() {
               {profileDataById.fullName}
             </span>
           </div>
-          <Messages messages={messages} />
+          <Messages />
           <MesssageInput />
         </>
       )}
@@ -64,12 +63,7 @@ const NoChatSelected = ({ user }: { user: any }) => {
             <TiMessages className="text-3xl md:text-6xl text-center" />
           </>
         ) : (
-          <>
-            <p>Please login first to chat.</p>
-            <a href="/login">
-              <span className="hover:underline text-blue-500">login</span>
-            </a>
-          </>
+          <Spinner />
         )}
       </div>
     </div>

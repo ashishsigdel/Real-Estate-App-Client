@@ -1,12 +1,14 @@
+"user client";
 import React, { useState } from "react";
 import Image from "next/image";
 import defaultImage from "@/assets/user/defaultProfile.jpg";
 import useMessage from "@/hooks/use-message";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MessageType } from "@/types/message";
 
 interface MessageProps {
   fromMe: boolean;
-  message: any;
+  message: MessageType;
 }
 
 const Message: React.FC<MessageProps> = ({ fromMe, message }) => {

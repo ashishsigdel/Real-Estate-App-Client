@@ -1,8 +1,8 @@
 "use client";
-import { PopupMessage } from "@/common";
-import useMessage from "@/hooks/use-message";
 import React from "react";
 import { BsSend } from "react-icons/bs";
+import { PopupMessage } from "@/common";
+import useMessage from "@/hooks/use-message";
 
 export default function MesssageInput() {
   const { handleMessageChange, isLoading, sendAMessage, typedMessage } =

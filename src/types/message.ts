@@ -29,7 +29,7 @@ export interface User {
   userProfileId: UserProfile;
 }
 
-export interface Message {
+export interface MessageType {
   _id: string;
   senderId: User;
   receiverId: User;
