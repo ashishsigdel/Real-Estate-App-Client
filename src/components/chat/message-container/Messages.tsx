@@ -1,15 +1,22 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Message from "./Message";
 import { useSelector } from "react-redux";
 import { IRootState } from "@/redux/rootReducer";
-import { MessageType } from "@/types/message";
 import { useMessage } from "@/hooks";
 
 const Messages: React.FC = () => {
   const { user } = useSelector((state: IRootState) => state.auth);
-
   const { messages } = useMessage();
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]); // This will scroll to bottom whenever messages change
 
   return (
     <div className="px-4 flex-1 overflow-auto">
@@ -20,6 +27,7 @@ const Messages: React.FC = () => {
           message={msg}
         />
       ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
