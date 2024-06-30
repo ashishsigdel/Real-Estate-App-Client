@@ -34,6 +34,7 @@ const Message: React.FC<MessageProps> = ({ fromMe, message }) => {
   const handleSaveMessage = () => {
     updateAMessage(message._id, editedMessage);
     setIsEditing(false);
+    setShowMenu(false);
   };
 
   const handleDeleteMessage = () => {
@@ -42,8 +43,10 @@ const Message: React.FC<MessageProps> = ({ fromMe, message }) => {
   };
 
   return (
-    <div className={`flex flex-col ${chatClassName} mb-2 relative`}>
-      <div className={`flex items-center gap-3 ${messageImagePosition}`}>
+    <div
+      className={`flex flex-col ${chatClassName} mb-4 relative group hover:cursor-pointer`}
+    >
+      <div className={`flex items-start gap-3 ${messageImagePosition}`}>
         <div className="w-10 rounded-full">
           <Image
             alt="Profile picture"
@@ -55,74 +58,88 @@ const Message: React.FC<MessageProps> = ({ fromMe, message }) => {
         </div>
         <div>
           <div
-            className={`w-72 ${messageColor} ${
-              message.isDeleted
-                ? "bg-gray-500 italic py-1"
-                : `${bubbleBgColor}  py-2`
-            } px-3 rounded-md`}
+            className={`flex ${
+              fromMe ? "flex-row-reverse" : "flex-row"
+            } items-center gap-2`}
           >
-            {isEditing ? (
-              <input
-                value={editedMessage}
-                onChange={(e) => setEditedMessage(e.target.value)}
-                className="bg-transparent p-1 w-full"
-              />
-            ) : (
-              message.message
-            )}
-          </div>
-          {!message.isDeleted && (
             <div
-              className={`text-[11px] flex gap-1 text-gray-500 dark:text-gray-600 ml-0 my-0.5 ${dateClassName}`}
+              className={`max-w-[22rem] ${messageColor} ${
+                message.isDeleted
+                  ? "bg-gray-500/80 italic py-1"
+                  : `${bubbleBgColor} py-1.5`
+              } px-3 rounded-lg`}
             >
-              <span>{new Date(message.createdAt).toLocaleString()}</span>
-
-              {message.isEdited && (
-                <>
-                  {" "}
-                  <span>.</span>{" "}
-                  <span className="text-gray-700 dark:text-gray-300">
-                    Edited
-                  </span>
-                </>
+              {isEditing ? (
+                <input
+                  value={editedMessage}
+                  onChange={(e) => setEditedMessage(e.target.value)}
+                  className="bg-transparent p-1 w-full"
+                />
+              ) : (
+                message.message
               )}
             </div>
-          )}
-        </div>
-        {fromMe && !message.isDeleted && (
-          <div className="relative">
-            <BsThreeDotsVertical
-              className="cursor-pointer"
-              onClick={() => setShowMenu((prev) => !prev)}
-            />
-            {showMenu && (
-              <div className="absolute right-4 -mt-2 w-24 bg-white dark:bg-dark border border-lightcolor dark:border-darkcolor rounded shadow-lg">
-                {isEditing ? (
-                  <button
-                    onClick={handleSaveMessage}
-                    className="w-full px-3 py-1 text-sm text-left hover:bg-lightcolor/50 hover:dark:bg-darkcolor/50"
-                  >
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    onClick={handleEditMessage}
-                    className="w-full px-3 py-1 text-sm text-left hover:bg-lightcolor/50 hover:dark:bg-darkcolor/50"
-                  >
-                    Edit
-                  </button>
+
+            {fromMe && !message.isDeleted && (
+              <div className="relative hidden group-hover:flex">
+                <BsThreeDotsVertical
+                  className="cursor-pointer mt-1"
+                  onClick={() => setShowMenu((prev) => !prev)}
+                />
+                {showMenu && (
+                  <div className="absolute right-4 -mt-2 w-24 bg-white dark:bg-dark border border-lightcolor dark:border-darkcolor rounded shadow-lg">
+                    {isEditing ? (
+                      <button
+                        onClick={handleSaveMessage}
+                        className="w-full px-3 py-1 text-sm text-left hover:bg-lightcolor/50 hover:dark:bg-darkcolor/50"
+                      >
+                        Save
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleEditMessage}
+                        className="w-full px-3 py-1 text-sm text-left hover:bg-lightcolor/50 hover:dark:bg-darkcolor/50"
+                      >
+                        Edit
+                      </button>
+                    )}
+                    <button
+                      onClick={handleDeleteMessage}
+                      className="w-full px-3 py-1 text-sm text-left hover:bg-lightcolor/50 hover:dark:bg-darkcolor/50"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 )}
-                <button
-                  onClick={handleDeleteMessage}
-                  className="w-full px-3 py-1 text-sm text-left hover:bg-lightcolor/50 hover:dark:bg-darkcolor/50"
-                >
-                  Delete
-                </button>
               </div>
             )}
           </div>
-        )}
+        </div>
       </div>
+      {!message.isDeleted && (
+        <div
+          className={`px-[54px] text-[11px] flex gap-1 text-gray-500 dark:text-gray-600 ml-0 my-0.5 ${dateClassName}`}
+        >
+          <span>
+            {new Date(message.createdAt).toLocaleString(undefined, {
+              month: "numeric",
+              day: "numeric",
+              year: "numeric",
+              hour12: true,
+              hour: "numeric",
+              minute: "numeric",
+            })}
+          </span>
+
+          {message.isEdited && (
+            <>
+              {" "}
+              <span>.</span>{" "}
+              <span className="text-gray-700 dark:text-gray-300">Edited</span>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };

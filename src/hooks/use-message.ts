@@ -10,13 +10,15 @@ import { useParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MessageType } from "@/types/message";
+import useChat from "@/zustand/useChat";
 
 export default function useMessage() {
   const dispatch = useDispatch();
   const params = useParams<{ username: string; conversationId: string }>();
   const [typedMessage, setTypedMessage] = useState<string>("");
-  const [messages, setMessages] = useState<MessageType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { messages, setMessages } = useChat();
 
   const handleMessageChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTypedMessage(event.target.value);
@@ -65,7 +67,7 @@ export default function useMessage() {
       });
       const data: MessageType = response.data;
       setTypedMessage("");
-      setMessages((prevMessages) => [...prevMessages, data]);
+      setMessages([...messages, data]);
     } catch (error: any) {
       console.error("Error sending message:", error);
       if (
@@ -176,10 +178,6 @@ export default function useMessage() {
     }
   }, [params.conversationId]);
 
-  useEffect(() => {
-    console.log("Messages state updated:", messages);
-  }, [messages]);
-
   return {
     typedMessage,
     handleMessageChange,
@@ -188,6 +186,5 @@ export default function useMessage() {
     deleteAMessage,
     isLoading,
     fetchConversation,
-    messages,
   };
 }

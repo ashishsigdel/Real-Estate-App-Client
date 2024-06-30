@@ -1,25 +1,49 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Message from "./Message";
 import { useSelector } from "react-redux";
 import { IRootState } from "@/redux/rootReducer";
-import { useMessage } from "@/hooks";
+import useChat from "@/zustand/useChat";
+import useListenMessages from "@/hooks/useListenMessages";
 
 const Messages: React.FC = () => {
   const { user } = useSelector((state: IRootState) => state.auth);
-  const { messages } = useMessage();
+  const { messages } = useChat();
+  useListenMessages();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const handleScroll = () => {
+    if (messagesContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } =
+        messagesContainerRef.current;
+      if (scrollTop + clientHeight < scrollHeight) {
+        setIsUserScrolling(true);
+      } else {
+        setIsUserScrolling(false);
+      }
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]); // This will scroll to bottom whenever messages change
+    const container = messagesContainerRef.current;
+    container?.addEventListener("scroll", handleScroll);
+    return () => {
+      container?.removeEventListener("scroll", handleScroll);
+    };
+  }, [messages]);
+
+  useEffect(() => {
+    if (!isUserScrolling) {
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }, [messages, isUserScrolling]);
 
   return (
-    <div className="px-4 flex-1 overflow-auto">
+    <div ref={messagesContainerRef} className="px-4 flex-1 overflow-auto">
       {messages.map((msg) => (
         <Message
           key={msg._id}
