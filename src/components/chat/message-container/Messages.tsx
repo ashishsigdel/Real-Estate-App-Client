@@ -45,13 +45,10 @@ const Messages: React.FC = () => {
   return (
     <div ref={messagesContainerRef} className="px-4 flex-1 overflow-auto">
       {messages.map((msg) => (
-        <Message
-          key={msg._id}
-          fromMe={user?.userId === msg.senderId._id}
-          message={msg}
-        />
+        <div key={msg._id} ref={messagesEndRef}>
+          <Message fromMe={user?.userId === msg.senderId._id} message={msg} />
+        </div>
       ))}
-      <div ref={messagesEndRef} />
     </div>
   );
 };

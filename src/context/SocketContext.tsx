@@ -36,18 +36,20 @@ export const SocketContextProvider = ({
 
   useEffect(() => {
     if (user) {
-      const newSocket = io(`${process.env.NEXT_PUBLIC_API_URL}`) as Socket;
+      const newSocket: Socket = io(`${process.env.NEXT_PUBLIC_API_URL}`);
 
       setSocket(newSocket);
 
-      return () => newSocket.close();
+      return () => {
+        newSocket.close();
+      };
     } else {
       if (socket) {
         socket.close();
         setSocket(null);
       }
     }
-  }, [user]);
+  }, [user, socket]);
 
   return (
     <SocketContext.Provider value={{ socket }}>

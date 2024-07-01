@@ -15,7 +15,7 @@ export default function MessageContainer() {
   const pathname = usePathname();
   const params = useParams<{ conversationId: string }>();
   const { user } = useSelector((state: IRootState) => state.auth);
-  const { fetchConversation, messages } = useMessage();
+  const { fetchConversation } = useMessage();
   const { fetchProfileById, profileDataById } = useProfile();
 
   useEffect(() => {
