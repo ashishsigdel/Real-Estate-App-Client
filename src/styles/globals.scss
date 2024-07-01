@@ -11,3 +11,10 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+.message-box::before {
+  display: block;
+  width: 0;
+  content: "";
+  border: 15px solid transparent;
+}

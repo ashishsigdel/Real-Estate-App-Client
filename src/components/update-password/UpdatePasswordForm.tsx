@@ -1,6 +1,6 @@
 "use client";
 import { PopupMessage, Spinner } from "@/common";
-import useUpdatePassword from "@/hooks/use-update-password";
+import { useUpdatePassword } from "@/hooks";
 import { setMessage } from "@/redux/features/popupMessageSlice";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";

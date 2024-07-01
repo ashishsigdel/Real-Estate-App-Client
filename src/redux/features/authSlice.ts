@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface User {
+  _id: string;
+  userId: string;
   email: string;
   isEmailVerified: boolean;
   fullName: string;
   phone: string;
   username: string;
   profilePicture: string | undefined;
+  gender?: string;
+  dob?: string;
 }
 
 interface AuthState {

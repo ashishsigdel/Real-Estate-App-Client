@@ -1,8 +1,15 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { FaPhone } from "react-icons/fa";
 
 export default function TopHeader() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/chat")) {
+    return null;
+  }
   return (
     <div className="bg-gray-100 text-success dark:bg-slate-950 dark:text-skin w-full p-[10px]">
       <div className="container">

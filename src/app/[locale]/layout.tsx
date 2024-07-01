@@ -7,6 +7,7 @@ import { ToastUtils } from "@/utils";
 import { Header } from "@/components/header";
 import { CustomThemeProvider, StoreProvider } from "@/providers";
 import AuthUtil from "@/components/utils/AuthUtils";
+import { SocketContextProvider } from "@/context/SocketContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,8 +33,10 @@ export default function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <CustomThemeProvider>
               <AuthUtil />
-              <Header />
-              {children}
+              <SocketContextProvider>
+                <Header />
+                {children}
+              </SocketContextProvider>
             </CustomThemeProvider>
             <ToastUtils />
           </NextIntlClientProvider>

@@ -6,6 +6,8 @@ import logo from "@/assets/logo.svg";
 import HeaderSearch from "./HeaderSearch";
 import HeaderAccount from "./HeaderAccount";
 import { FaBars } from "react-icons/fa";
+import { HiChatBubbleOvalLeft } from "react-icons/hi2";
+import { PiWechatLogoFill } from "react-icons/pi";
 
 export default function MainHeader() {
   return (
@@ -25,6 +27,11 @@ export default function MainHeader() {
           <HeaderSearch />
           <div className="sm:flex gap-3 items-center font-semibold hidden">
             <HeaderAccount />
+            <a href="/chat">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center">
+                <PiWechatLogoFill className="text-[32px]" />
+              </div>
+            </a>
             <ThemeToggle />
           </div>
           <div className="sm:hidden inline-block font-semibold text-2xl">

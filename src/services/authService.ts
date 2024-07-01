@@ -31,3 +31,15 @@ export const logout = async () => {
     throw error;
   }
 };
+
+export const deleteAccount = async (password: string, confirmText: string) => {
+  try {
+    const response = await myAxios.post("/auth/delete-account", {
+      password,
+      confirmText,
+    });
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};
