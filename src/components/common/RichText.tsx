@@ -4,22 +4,12 @@ import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 
 type Params = {
-  setError: (error: string) => void;
-  error: string;
-  value: string;
+  value: string | undefined;
   handleChange: (value: string) => void;
   name: string;
-  update: boolean;
 };
 
-export default function RichText({
-  setError,
-  error,
-  value,
-  handleChange,
-  name,
-  update,
-}: Params) {
+export default function RichText({ value, handleChange, name }: Params) {
   const { quill, quillRef } = useQuill({
     theme: "snow",
     modules: {
@@ -53,33 +43,17 @@ export default function RichText({
 
   useEffect(() => {
     if (quill) {
-      quill.root.innerHTML = value;
       quill.on("text-change", () => {
-        const text = quill.getText().trim();
-        if (text === "") {
-          setError(`${name} is required`);
-        } else {
-          setError("");
-          handleChange(quill.root.innerHTML);
-        }
-      });
-
-      quill.root.addEventListener("click", () => {
-        const text = quill.getText().trim();
-        if (text === "") {
-          setError(`${name} is required`);
-        } else {
-          setError("");
-        }
+        handleChange(quill.root.innerHTML);
       });
     }
-  }, [quill, name, setError, handleChange]);
+  }, [quill, handleChange]);
 
   useEffect(() => {
-    if (quill && update === true) {
+    if (quill && value !== undefined && value !== quill.root.innerHTML) {
       quill.root.innerHTML = value;
     }
-  }, [quill, update, value]);
+  }, [quill, value]);
 
   return (
     <div className="grid grid-cols-1 gap-2 mb-3 w-full">
@@ -91,12 +65,6 @@ export default function RichText({
         <div className="w-full flex flex-col min-h-[200px]">
           <div ref={quillRef} className="w-full"></div>
         </div>
-
-        {error && (
-          <span className="text-danger text-[12px] font-normal tracking-[0] mt-1 italic leading-[1] w-full">
-            {error}
-          </span>
-        )}
       </div>
     </div>
   );

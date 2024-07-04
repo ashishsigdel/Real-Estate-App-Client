@@ -13,7 +13,7 @@ export const getAllCategory = async () => {
   }
 };
 
-export const getById = async (id: string) => {
+export const getCategoryById = async (id: string) => {
   try {
     const response = await myAxios.get(`/post-category/${id}`);
     return response;
