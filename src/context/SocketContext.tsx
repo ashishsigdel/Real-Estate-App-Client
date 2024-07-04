@@ -49,7 +49,7 @@ export const SocketContextProvider = ({
         setSocket(null);
       }
     }
-  }, [user, socket]);
+  }, [user]);
 
   return (
     <SocketContext.Provider value={{ socket }}>
