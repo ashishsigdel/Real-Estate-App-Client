@@ -64,7 +64,14 @@ export default function HeaderAccount() {
                   Profile
                 </Link>
               </li>
-
+              <li>
+                <Link
+                  href="/posts"
+                  className="block py-2 px-5 text-sm font-normal text-gray-500 dark:text-lightcolor hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  Posts
+                </Link>
+              </li>
               <li>
                 <div
                   className="cursor-pointer block py-2 px-5 text-sm font-normal text-gray-500 dark:text-lightcolor hover:bg-gray-100 dark:hover:bg-gray-700"
