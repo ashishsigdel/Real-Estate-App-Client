@@ -18,8 +18,8 @@ export default function usePost() {
   const [formData, setFormData] = useState<Partial<PostType>>({
     title: "",
     description: "",
-    category: "",
-    country: "",
+    categoryId: {},
+    countryId: {},
     city: "",
     address: "",
     price: undefined,
@@ -122,13 +122,13 @@ export default function usePost() {
 
       dispatch(
         setMessage({
-          message: "Created Successfully.",
+          message: response.data.message,
           type: "success",
           showOn: "posts",
         })
       );
 
-      router.push(`/post/${response.data.post._id}`);
+      router.push(`/posts/${response.data.post._id}`);
     } catch (error: any) {
       if (
         error.response &&

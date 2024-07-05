@@ -2,8 +2,8 @@ export type PostType = {
   title: string;
   description: string;
   featureImagesId: string[];
-  category: string;
-  country: string;
+  categoryId: any;
+  countryId: any;
   city: string;
   address: string;
   media: File[];

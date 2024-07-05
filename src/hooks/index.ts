@@ -10,3 +10,4 @@ export { default as useProfile } from "./use-profile";
 export { default as useConversations } from "./use-conversations";
 export { default as useMessage } from "./use-message";
 export { default as usePost } from "./use-post";
+export { default as useGetPost } from "./use-get-post";

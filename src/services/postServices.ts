@@ -12,3 +12,12 @@ export const createPost = async (formData: FormData) => {
     throw error;
   }
 };
+
+export const getPostById = async (postId: string) => {
+  try {
+    const response = await myAxios.get(`/post/${postId}`);
+    return response;
+  } catch (error: any) {
+    throw error;
+  }
+};
